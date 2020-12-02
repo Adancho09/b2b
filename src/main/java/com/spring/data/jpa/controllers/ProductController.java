@@ -213,18 +213,23 @@ public class ProductController {
                 model.addAttribute("notPage",0);
                 model.addAttribute("palabra",palabra);
 
-                return "listar";
+                return "listarFiltro";
             }
 
-            if(!matches.isEmpty())
-            {
-                model.addAttribute("Products", matches);
-                model.addAttribute("siProduct",1);
-                model.addAttribute("notPage",0);
-                model.addAttribute("palabra",palabra);
 
-                return "listar";
-            }
+
+                if(!matches.isEmpty())
+                {
+                    model.addAttribute("Products", matches);
+                    model.addAttribute("siProduct",1);
+                    model.addAttribute("notPage",0);
+                    model.addAttribute("palabra",palabra);
+
+                    return "listarFiltro";
+                }
+
+
+
             String error = "No se encontraron resultados para tu busqueda";
 
             model.addAttribute("Error", error);
