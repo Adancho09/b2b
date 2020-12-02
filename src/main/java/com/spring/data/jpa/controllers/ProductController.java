@@ -44,15 +44,7 @@ public class ProductController {
     private ICartService cartService;
 
 
-    @RequestMapping(value="/listarArticulos",method = RequestMethod.GET)
-    @ResponseBody
-    public List<vw_b2barticulos_row> listarArticulos(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-        Usuario usuario = usuarioDao.findByCliente(username);
 
-        return productoService.findAllByLista(usuario.getListaPreciosEsp());
-    }
     @RequestMapping(value="/listar",method = RequestMethod.GET)
     public String listar(@RequestParam Map<String,String> requestParams,Model model){
 
