@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="head :: Head"></head>
+<body>
+<!-- Navigation -->
+<nav th:replace="header :: Nav-header"></nav>
+
+<!--pageContent-->
+<div class="container" style="margin-top: 5rem;">
+
+
+<div class="row">
+
+
+        <div class="col-lg-3 col-md-3 mb-3">
+            <div class="card h-100">
+                <a href="#"><img class="card-img-top" th:src="@{'/img/sucursales/'+${adres.cliente}+'-'+${adres.ID}+'.jpg'}" alt="" height="150" width="680"></a>
+                <div class="card-body text-left">
+
+
+
+                    <div class="float-left"><h6 class="card-title float-left" th:text="${adres.nombre}"></h6> </div>
+
+
+                    <ul id="uli">
+
+                        <li  th:text="${'Colonia: '+adres.colonia}"></li>
+
+                        <li th:text="${'Direccion: '+adres.direccion}" ></li>
+
+                        <li th:if="${adres.entreCalles}"th:text="${'Calles: '+adres.entreCalles}"></li>
+
+                        <li th:if="${adres.direccionNumero}" th:text="${'numero exterior: '+adres.direccionNumero}" ></li>
+
+                        <li th:if="${adres.direccionNumeroInt}"th:text="${'numero interior: '+adres.direccionNumeroInt}" ></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="card-footer">
+                    <h6 th:text="${adres.poblacion} "  class="float-left"></h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 col-md-8 mb-8" >
+            <div class="col-lg-12 col-md-12 col-12"> <h6>Detalles de la orden</h6></div>
+
+            <table class="table table-sm table-hover  table-striped "  >
+                <thead>
+                <tr>
+                    <th scope="col">Orden Compra</th>
+                    <th scope="col">Fecha emision </th>
+                    <th scope="col">Metodo de pago</th>
+                    <th scope="col">Archivos</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${order.ordencompra}"></td>
+                    <td th:text="${order.fechaemision}"></td>
+                    <td th:text="${order.condicion}"></td>
+                    <td> <a th:href="@{'/Comprobantes/'+${year}+'/'+${month}+'/'+${CTE}+'/Factura '+${order.movid}+'.pdf'}"  target="_blank" class=" btn btn-danger far fa-file-pdf" style="font-size: 3rem;"></a></td>
+
+                </tr>
+                </tbody>
+
+            </table>
+            <p></p>
+
+            <table class="table table-sm table-hover  table-striped " id="miTabla">
+                <thead>
+                <tr>
+                    <th scope="col">Articulo</th>
+                    <th scope="col">Almacen </th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Iva</th>
+
+
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr  th:each="art :${orderD}"  >
+                    <td th:text="${art.articulo}"class=" art" ></td>
+                    <td th:if="${art.almacen == 1}">GDL</td>
+                    <td th:if="${art.almacen == 3}">CDMX</td>
+                    <td th:text="${art.cantidad}" id="cantidad"></td>
+                    <td th:text="'$'+${art.precio}" class="precio"></td>
+                    <td th:text="'$'+${art.impuesto1}" class="impuesto"></td>
+
+                </tr>
+                </tbody>
+
+            </table>
+            <div id="total"  class="text-right "></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+
+</script>
+<script>
+    $(document).ready(function(){
+        // obtenemos todas las filas del tbody
+        var filas=document.querySelectorAll("#miTabla tbody tr");
+
+        var total=0;
+
+        // recorremos cada una de las filas
+        filas.forEach(function(e) {
+
+            // obtenemos las columnas de cada fila
+            var columnas=e.querySelectorAll("td");
+
+            // obtenemos los valores de la cantidad y importe
+
+            var importe=parseFloat( columnas[3].textContent.replace(/\$/, ''), 10);;
+
+            // mostramos el total por fila
+            columnas[4].textContent=(importe*0.16).toFixed(2);
+
+
+
+        });
+
+        $('.impuesto').each(function() {
+            $(this).text('$'+$(this).text());
+        });
+
+        var sum=0;
+        $('.precio').each(function() {
+            sum += parseFloat($(this).text().replace(/\$/, ''), 10);
+        });
+        sum = sum*1.16;
+        $('#total').text('Total de la orden $'+ parseFloat(sum).toFixed(2));
+
+
+    });
+
+
+
+</script>
+
+</html>

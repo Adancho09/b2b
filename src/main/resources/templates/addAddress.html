@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="head :: Head"></head>
+
+<body>
+<!--Navigation-->
+<!-- Navigation -->
+<nav th:replace="header :: Nav-header"></nav>
+<!-- Navigation header ending -->
+
+
+
+<!--pageContent-->
+
+<div class="container">
+
+    <div class="row" style="margin-top: 5rem; ">
+
+        <div class="col-lg-3">
+
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${Usuario.nombre}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" >Direcciones</h6>
+                    <p class="card-text">Consulta tus direcciones Disponibles </p>
+
+                </div>
+            </div>
+            <p>
+
+            </p>
+
+            <div class="list-group ">
+                <a class="page-link"  th:href="@{/form}">Agregar nueva Sucursal</a>
+
+
+            </div>
+
+
+        </div>
+        <!-- /.col-lg-3 -->
+<div class="col-lg-6 card">
+    <form class="form-inline" th:action="@{/addAddress/}" enctype="multipart/form-data" method="post">
+        <div class="card h-100" >
+            <div class="card-header">
+                <h4>Modifica los datos de tu sucursal </h4>
+            </div>
+            <div class="card-body">
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Nombre">Nombre:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="Nombre" placeholder="Nombre:" name="Nombre" required="true">
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Estado">Estado:</label>
+                    <div class="col-md-3">
+                        <select id="Estado" name="Estado">
+                            <option value="Distrito Federal">Distrito Federal</option>
+                            <option value="Aguascalientes">Aguascalientes</option>
+                            <option value="Baja California">Baja California</option>
+                            <option value="Baja California Sur">Baja California Sur</option>
+                            <option value="Campeche">Campeche</option>
+                            <option value="Chiapas">Chiapas</option>
+                            <option value="Chihuahua">Chihuahua</option>
+                            <option value="Coahuila">Coahuila</option>
+                            <option value="Colima">Colima</option>
+                            <option value="Durango">Durango</option>
+                            <option value="Guanajuato">Guanajuato</option>
+                            <option value="Guerrero">Guerrero</option>
+                            <option value="Hidalgo">Hidalgo</option>
+                            <option value="Jalisco">Jalisco</option>
+                            <option value="M&eacute;xico">M&eacute;xico</option>
+                            <option value="Michoac&aacute;n">Michoac&aacute;n</option>
+                            <option value="Morelos">Morelos</option>
+                            <option value="Nayarit">Nayarit</option>
+                            <option value="Nuevo Le&oacute;n">Nuevo Le&oacute;n</option>
+                            <option value="Oaxaca">Oaxaca</option>
+                            <option value="Puebla">Puebla</option>
+                            <option value="Quer&eacute;taro">Quer&eacute;taro</option>
+                            <option value="Quintana Roo">Quintana Roo</option>
+                            <option value="San Luis Potos&iacute;">San Luis Potos&iacute;</option>
+                            <option value="Sinaloa">Sinaloa</option>
+                            <option value="Sonora">Sonora</option>
+                            <option value="Tabasco">Tabasco</option>
+                            <option value="Tamaulipas">Tamaulipas</option>
+                            <option value="Tlaxcala">Tlaxcala</option>
+                            <option value="Veracruz">Veracruz</option>
+                            <option value="Yucat&aacute;n">Yucat&aacute;n</option>
+                            <option value="Zacatecas">Zacatecas</option>
+                        </select>
+
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Poblacion">Municipio:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="Poblacion" name="Poblacion" placeholder="Poblacion"required="true">
+                    </div>
+                </div>
+
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Colonia">Colonia:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="Colonia" name="Colonia" placeholder="Colonia"required="true">
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="codigoPostal">Codigo Postal:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Codigo Postal"required="true">
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="direccion">Direccion:</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="direccion" name="direccion"placeholder="Direccion"required="true">
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="entreCalles">Entre calles:</label>
+                    <div class="col-md-3">
+                        <textarea class="form-control" id="entreCalles" rows="2" name="entreCalles"required="true"></textarea>
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="exterior">Numero Exterior :</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="exterior" name="exterior" required="true">
+                    </div>
+                </div>
+                <p></p>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="interior">Numero Interior :</label>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="interior" name="interior"required="true">
+                        <input type="hidden" class="form-control" id="hidden" name="ID" value="0">
+                    </div>
+                </div>
+                <p></p>
+
+
+
+
+            </div>
+        </div>
+
+</div>
+
+<div class="col-lg-3 card">
+
+    <div class="card" >
+        <div class="card-body">
+            <a href="#"><img class="card-img-top" th:src="@{'/img/noImage.png'}" alt=""></a>
+
+        </div>
+        <div class="card-footer form-group">
+            <input class="form-control" type="file" name="fotoSuc"/>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-6 col-sm-6">
+                  <button type="submit" class="btn btn-info">Guardar</button>   </div>
+        </div>
+
+    </div>
+
+</div>
+
+</form>
+</div>
+<!-- /.row -->
+</div>
+<!-- /.container -->
+
+</body>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</html></html>

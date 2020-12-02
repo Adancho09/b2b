@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="head :: Head"></head>
+
+<body>
+<!--Navigation-->
+<!-- Navigation -->
+<nav th:replace="header :: Nav-header"></nav>
+
+<!--pageContent-->
+
+<div class="container" style="margin-top: 5rem;">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${Usuario.nombre}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" >Panel de Pedidos</h6>
+                    <p class="card-text">Consulta el Historico de tus Pedidos </p>
+
+                </div>
+            </div>
+
+
+            <p>
+
+            </p>
+
+            <div class="list-group ">
+                <a class="page-link"  th:href="@{/history(estatus='CONCLUIDO',page=0)}">Facturas</a>
+                <a class="page-link"  th:href="@{/history(estatus='PENDIENTE',page=0)}">Pedidos</a>
+                <a class="page-link"  th:href="@{/history(estatus='CANCELADO',page=0)}">Cancelaciones</a>
+
+            </div>
+
+
+        </div>
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Movimiento</th>
+                    <th scope="col">Orden Compra</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Importe</th>
+                    <th scope="col">Impuestos</th>
+                    <th scope="col">Estatus </th>
+                    <th scope="col">Pago </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="venta :${Ventas}">
+
+                    <td><a th:href="@{/orderDetail(movId=${venta.movId},id=${venta.ID})}" th:text="${venta.movId}"></a></td>
+                    <td th:text="${venta.ordencompra}"></td>
+                    <td th:text="${venta.fechaEmision}"></td>
+                    <td th:text="${'$'+venta.importe}"></td>
+                    <td th:text="${'$'+venta.impuestos}"></td>
+                    <td th:if="${venta.estatus == 'CONCLUIDO'}"  ><button class="btn btn-success" th:text="${venta.estatus}"></button></td>
+                    <td th:if="${venta.estatus == 'PENDIENTE'}"  ><button class="btn btn-info" th:text="${venta.estatus}"></button></td>
+                    <td th:if="${venta.estatus == 'CANCELADO'}"  ><button class="btn btn-danger" th:text="${venta.estatus}"></button></td>
+                    <td >Credito</td>
+
+
+
+                </tr>
+               
+                </tbody>
+            </table>
+
+            <div class="row">
+                <nav th:replace="paginatorNav :: paginator"></nav>
+            </div>
+
+
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+
+
+
+
+</body>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</html>

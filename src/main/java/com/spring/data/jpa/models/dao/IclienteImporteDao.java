@@ -1,0 +1,16 @@
+package com.spring.data.jpa.models.dao;
+
+import com.spring.data.jpa.models.entity.clienteImportes;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+
+public interface IclienteImporteDao extends CrudRepository<clienteImportes,String> {
+
+    @Query(value = "select * from vw_b2bfacturacionclienteanual where cliente =?1",nativeQuery = true)
+    clienteImportes findAllByClienteFacturacion(String cliente);
+    @Query(value = "select * from vw_b2bdevolucionclienteanual where cliente =?1",nativeQuery = true)
+    clienteImportes findAllByClienteDev(String cliente);
+    @Query(value = "select * from vw_b2bventaclienteanual where cliente =?1",nativeQuery = true)
+    clienteImportes findAllByClienteVenta(String cliente);
+
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+<div class=" col-sm-12 col-lg-12 col-md-12 fixed-top" style="background: white" th:fragment="Nav-header">
+    <nav class="navbar navbar-expand-lg "   style="height:62px;">
+        <div class="container" id="navBlanca">
+
+            <div class="collapse navbar-collapse " id="navbarResponsive">
+
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2 text-center"><img class="img-fluid" th:src="@{/img/acteck.png}"></div>
+                <div class="col-sm-5"></div>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-expand-lg nv-Head hedNav "   style="height:62px;" >
+
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 text-center"><ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" th:href="@{/}" >INICIO
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/history(page=0,estatus='CONCLUIDO')}">HISTORIAL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/miCuenta}">MI CUENTA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" th:href="@{/address(page=0)}">SUCURSALES</a>
+                    </li>
+
+                </ul></div>
+                <div class="col-sm-4  text-right">
+                    <ul class="navbar-nav ml.auto">
+                        <li class="nav-item ">
+                            <a class="nav-link text-white"  th:href="@{/cart}">  <button class="btn btn-dark fas fa-cart-arrow-down"></button> <span class="btn btn-primary" th:if="${carCount > 0 }" th:text="${'('+carCount+')'}"> </span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white"  th:href="@{/logout}"> <button class="btn btn-dark fa fa-sign-out-alt"></button></a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+</body>
+</html>
