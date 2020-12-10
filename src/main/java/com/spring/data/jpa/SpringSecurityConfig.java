@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -29,8 +28,8 @@ private BCryptPasswordEncoder passwordEncoder;
 @Override
 protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/getNav","/css/**","/vendor/**","/img/**").permitAll()
-        .antMatchers("/*").permitAll()
+        http.authorizeRequests().antMatchers("/","/css/**","/vendor/**","/img/**").permitAll()
+        .antMatchers("/*").authenticated()
         .and()
         .formLogin().loginPage("/login")
         .permitAll()

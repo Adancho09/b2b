@@ -1,7 +1,6 @@
 package com.spring.data.jpa.models.dao;
 
 import com.spring.data.jpa.models.entity.Usuario;
-import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -46,10 +45,7 @@ public interface IProductDao extends PagingAndSortingRepository<vw_b2barticulos_
     List<String> findByCategoriaAndGrupo(String categoria,String grupo,String lista);
     @Query("select canal from vw_b2barticulos_row  where categoria =?1 and grupo =?2 and familia =?3 and lista =?4 GROUP BY canal")
     List<String> findByCategoriaAndGrupoAndFamilia(String categoria,String grupo,String familia,String lista);
-    @Query("select categoria from vw_b2barticulos_row")
-    List<String> findAllCategoria(String lista);
-    @Query("select * from vw_articulosBR")
-    List<String> findByTodo();
+
 
 
 }
