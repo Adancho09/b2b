@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @Controller
 public class ProductController {
 
@@ -43,14 +44,59 @@ public class ProductController {
     @Autowired
     private ICartService cartService;
 
-
-
+    @ResponseBody
+    @RequestMapping(value="/getNav", method = RequestMethod.GET)
+    public List listarCategorias() {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        List<String> categories=productoService.findByCategoriaL(usuario.getListaPreciosEsp(),"");
+    	
+    	return categories;
+    }
+    @RequestMapping(value="/listarArticulos", method = RequestMethod.GET)
+    public List listarArticulos() {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        List<String> articulos=productoService.findByTodo();
+    	
+    	return articulos;
+    }
     @RequestMapping(value="/listar",method = RequestMethod.GET)
     public String listar(@RequestParam Map<String,String> requestParams,Model model){
 
+    	String username;
+    	
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails) principal).getUsername();
-        Usuario usuario = usuarioDao.findByCliente(username);
+        if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
 
        String ID = cartService.findByRecentDate(usuario.getCliente());
        if(ID!=null)
