@@ -2,6 +2,7 @@ package com.spring.data.jpa.service;
 
 
 import com.spring.data.jpa.models.dao.IProductDao;
+import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -101,7 +102,6 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
-
     @Override
     @Transactional(readOnly = true)
     public List<String> findByCategoriaAndGrupo(String categoria,String grupo,String lista){
@@ -112,5 +112,11 @@ public class ProductServiceImpl implements IProductService {
     public List<String> findByCategoriaAndGrupoAndFamilia(String categoria,String grupo,String familia,String lista) {
         return productDao.findByCategoriaAndGrupoAndFamilia(categoria,grupo,familia,lista);
     }
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<String> findByTodo() {
+		return productDao.findByTodo();
+	}
 
 }
