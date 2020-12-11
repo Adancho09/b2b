@@ -129,4 +129,8 @@ public class ArticuloServiceImpl implements IArticuloService{
 	public List<String> findBySubcategoria(String categoria) {
 		return articuloDao.findBySubcategoria(categoria);
 	}
+	@Override
+	public List<String> findByFamilia(String categoria, String subcategoria) {
+		return articuloDao.findByFamilia(categoria, subcategoria);
+	}
 }

@@ -45,6 +45,7 @@ public interface IArticuloService {
 	List<String> findByCategoria();
 	@Query(value = "select grupo from vw_articulosbr WHERE categoria =?1 GROUP BY grupo",nativeQuery = true)
 	List<String> findBySubcategoria(String categoria);
-
+	@Query(value = "select familia from vw_articulosbr WHERE categoria =?1 AND grupo= ?2 GROUP BY grupo",nativeQuery = true)
+	List<String> findByFamilia(String categoria, String subcategoria);
 
 }

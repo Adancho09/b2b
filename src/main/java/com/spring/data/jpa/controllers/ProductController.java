@@ -111,7 +111,7 @@ public class ProductController {
     	return categorias;
     }
     @ResponseBody
-    @RequestMapping(value="/listarSubcategorias//{categoria}", method = RequestMethod.GET)
+    @RequestMapping(value="/listarSubcategorias/{categoria}", method = RequestMethod.GET)
     public List listarSubCategoriasBalam(@PathVariable(value="categoria") String categoria) {
     	
     	 String username;
@@ -129,6 +129,26 @@ public class ProductController {
         List<String> subcategorias=articuloService.findBySubcategoria(categoria);
     	
     	return subcategorias;
+    }
+    @ResponseBody
+    @RequestMapping(value="/listarFamilias/{categoria}/{subcategoria}", method = RequestMethod.GET)
+    public List listarFamiliaBalam(@PathVariable(value="categoria") String categoria, @PathVariable(value="subcategoria") String subcategoria) {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        List<String> familias=articuloService.findByFamilia(categoria,subcategoria);
+    	
+    	return familias;
     }
     @RequestMapping(value="/listar",method = RequestMethod.GET)
     public String listar(@RequestParam Map<String,String> requestParams,Model model){
