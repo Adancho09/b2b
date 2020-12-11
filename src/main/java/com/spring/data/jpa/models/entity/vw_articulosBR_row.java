@@ -7,30 +7,31 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "vw_articulosBR" )
+@Table(name = "vw_articulosbr" )
 public class vw_articulosBR_row implements Serializable {
 
 	@Id
-    @Column(name = "art.Fabricante")
+    private String articulo;
+
     private String fabricante;
-	@Column(name = "art.Categoria")
+
     private String categoria;
-	@Column(name = "art.Grupo")
+
     private String grupo;
-	@Column(name = "art.Familia")
+
     private String familia;
-	@Column(name = "art.Canal")
+
     private String canal;
     private String lista;
     private BigDecimal Precio;
-    @Column(name = "art.Articulo")
-    private String articulo;
+
+
     private String descripcion;
     private int real_qty;
     private int real_qty3;
-    @Column(name = "v.Cantidad")
+
     private int  cantidad;
-    @Column(name = "v.importe")
+
     private double  importe;
 
     public String getLista() {

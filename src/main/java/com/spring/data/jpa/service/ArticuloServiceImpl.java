@@ -16,7 +16,6 @@ import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 public class ArticuloServiceImpl implements IArticuloService{
 
 	@Autowired
-    @Qualifier("articuloBean")
     private IArticuloDao articuloDao;
 
     @Override
@@ -110,7 +109,12 @@ public class ArticuloServiceImpl implements IArticuloService{
         return articuloDao.findByCategoriaAndGrupoAndFamilia(categoria,grupo,familia,lista);
     }
 
-	@Override
+    @Override
+    public List<String> findAllCategoria(String lista) {
+        return null;
+    }
+
+    @Override
 	@Transactional(readOnly = true)
 	public List<String> findByTodo() {
 		return articuloDao.findByTodo();

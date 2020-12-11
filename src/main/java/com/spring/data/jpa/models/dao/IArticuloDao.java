@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 
-@Qualifier("articuloBean")
+
 public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> {
 	
 	 public List<vw_articulosBR_row> findAllByLista(String lista );
