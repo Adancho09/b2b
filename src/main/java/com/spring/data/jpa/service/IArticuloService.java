@@ -39,7 +39,8 @@ public interface IArticuloService {
 	List<String> findByCategoriaAndGrupoAndFamilia(String categoria,String grupo,String familia,String lista);
 	@Query("select categoria from vw_b2barticulos_row")
 	List<String> findAllCategoria(String lista);
-	@Query(value = "select * from vw_articulosBR")
+	@Query(value = "select * from vw_articulosBR",nativeQuery = true)
 	List<String> findByTodo();
+
 
 }
