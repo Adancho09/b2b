@@ -112,11 +112,4 @@ public class ProductServiceImpl implements IProductService {
     public List<String> findByCategoriaAndGrupoAndFamilia(String categoria,String grupo,String familia,String lista) {
         return productDao.findByCategoriaAndGrupoAndFamilia(categoria,grupo,familia,lista);
     }
-
-	@Override
-	public List<String> findByTodo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

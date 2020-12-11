@@ -37,9 +37,4 @@ public interface IProductService  {
     List<String> findByCategoriaAndGrupo(String categoria,String grupo,String lista);
     @Query("select canal from vw_b2barticulos_row  where categoria =?1 and grupo =?2 and familia =?3 and lista =?4 GROUP BY canal")
     List<String> findByCategoriaAndGrupoAndFamilia(String categoria,String grupo,String familia,String lista);
-    @Query("select categoria from vw_articulosBR_row")
-    List<String> findByTodo();
-
-
-
 }
