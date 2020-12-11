@@ -6,6 +6,7 @@ import com.spring.data.jpa.models.dao.IUsuarioDao;
 import com.spring.data.jpa.models.entity.CardD;
 import com.spring.data.jpa.models.entity.Usuario;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
+import com.spring.data.jpa.service.IArticuloService;
 import com.spring.data.jpa.service.ICardService;
 import com.spring.data.jpa.service.ICartService;
 import com.spring.data.jpa.service.IProductService;
@@ -36,6 +37,9 @@ public class ProductController {
 
     @Autowired
     private IProductService productoService;
+    
+    @Autowired
+    private IArticuloService articuloService;
 
     @Autowired
     private IUsuarioDao usuarioDao;
@@ -79,7 +83,7 @@ public class ProductController {
          
          Usuario usuario = usuarioDao.findByCliente(username);
     	
-        List<String> articulos=productoService.findByTodo();
+        List<String> articulos=articuloService.findByTodo();
     	
     	return articulos;
     }

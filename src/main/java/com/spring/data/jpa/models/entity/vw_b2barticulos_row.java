@@ -134,7 +134,7 @@ public class vw_b2barticulos_row implements Serializable {
     }
 
     public void setArticulo(String Articulo) {
-        this.articulo = articulo;
+        this.articulo = Articulo;
     }
 
     public vw_b2barticulos_row() {

@@ -1,12 +1,10 @@
 package com.spring.data.jpa.models.entity;
-import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 @Entity
 @Table(name = "vw_articulosBR" )

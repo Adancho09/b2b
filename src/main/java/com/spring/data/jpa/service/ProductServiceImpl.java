@@ -114,9 +114,9 @@ public class ProductServiceImpl implements IProductService {
     }
 
 	@Override
-	@Transactional(readOnly = true)
 	public List<String> findByTodo() {
-		return productDao.findByTodo();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
