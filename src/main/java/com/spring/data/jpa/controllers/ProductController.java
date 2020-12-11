@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,9 +106,29 @@ public class ProductController {
          
          Usuario usuario = usuarioDao.findByCliente(username);
     	
-        List<String> categorias=articuloService.findAllCategoria("1");
+        List<String> categorias=articuloService.findByCategoria();
     	
     	return categorias;
+    }
+    @ResponseBody
+    @RequestMapping(value="/listarSubcategorias//{categoria}", method = RequestMethod.GET)
+    public List listarSubCategoriasBalam(@PathVariable(value="categoria") String categoria) {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        List<String> subcategorias=articuloService.findBySubcategoria(categoria);
+    	
+    	return subcategorias;
     }
     @RequestMapping(value="/listar",method = RequestMethod.GET)
     public String listar(@RequestParam Map<String,String> requestParams,Model model){

@@ -43,7 +43,8 @@ public interface IArticuloService {
 	List<vw_articulosBR_row> findByTodo();
 	@Query(value = "select categoria from vw_articulosbr GROUP BY categoria",nativeQuery = true)
 	List<String> findByCategoria();
-
+	@Query(value = "select grupo from vw_articulosbr WHERE categoria =?1 GROUP BY grupo",nativeQuery = true)
+	List<String> findBySubcategoria(String categoria);
 
 
 }
