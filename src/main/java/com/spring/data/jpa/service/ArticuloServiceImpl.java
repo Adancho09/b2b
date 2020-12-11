@@ -116,7 +116,12 @@ public class ArticuloServiceImpl implements IArticuloService{
 
     @Override
 	@Transactional(readOnly = true)
-	public List<String> findByTodo() {
+	public List<vw_articulosBR_row> findByTodo() {
 		return articuloDao.findByTodo();
+	}
+
+	@Override
+	public List<String> findByCategoria() {
+		return articuloDao.findByCategoria();
 	}
 }

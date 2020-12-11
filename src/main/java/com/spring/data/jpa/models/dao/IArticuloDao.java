@@ -43,6 +43,8 @@ public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> 
 	    @Query("select categoria from vw_b2barticulos_row")
 	    List<String> findAllCategoria(String lista);
 	    @Query(value = "select * from vw_articulosBR",nativeQuery = true)
-	    List<String> findByTodo();
+	    List<vw_articulosBR_row> findByTodo();
+	    @Query(value = "select categoria from vw_articulosBR GROUP BY categoria",nativeQuery = true)
+	    List<String> findByCategoria();
 
 }

@@ -5,6 +5,7 @@ import com.spring.data.jpa.Paginator.PageRender;
 import com.spring.data.jpa.models.dao.IUsuarioDao;
 import com.spring.data.jpa.models.entity.CardD;
 import com.spring.data.jpa.models.entity.Usuario;
+import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
 import com.spring.data.jpa.service.IArticuloService;
 import com.spring.data.jpa.service.ICardService;
@@ -68,6 +69,7 @@ public class ProductController {
     	
     	return categories;
     }
+    @ResponseBody
     @RequestMapping(value="/listarArticulos", method = RequestMethod.GET)
     public List listarArticulos() {
     	
@@ -83,9 +85,29 @@ public class ProductController {
          
          Usuario usuario = usuarioDao.findByCliente(username);
     	
-        List<String> articulos=articuloService.findByTodo();
+        List<vw_articulosBR_row> articulos=articuloService.findByTodo();
     	
     	return articulos;
+    }
+    @ResponseBody
+    @RequestMapping(value="/listarCategorias", method = RequestMethod.GET)
+    public List listarCategoriasBalam() {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        List<String> categorias=articuloService.findAllCategoria("1");
+    	
+    	return categorias;
     }
     @RequestMapping(value="/listar",method = RequestMethod.GET)
     public String listar(@RequestParam Map<String,String> requestParams,Model model){
