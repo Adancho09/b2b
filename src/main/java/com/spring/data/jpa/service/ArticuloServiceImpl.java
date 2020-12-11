@@ -112,7 +112,7 @@ public class ArticuloServiceImpl implements IArticuloService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<String> findByTodo() {
-		return articuloDao.findByTodo();
+	public Iterable<vw_articulosBR_row> findAll() {
+		return articuloDao.findAll();
 	}
 }

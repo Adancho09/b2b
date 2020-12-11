@@ -5,6 +5,7 @@ import com.spring.data.jpa.Paginator.PageRender;
 import com.spring.data.jpa.models.dao.IUsuarioDao;
 import com.spring.data.jpa.models.entity.CardD;
 import com.spring.data.jpa.models.entity.Usuario;
+import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
 import com.spring.data.jpa.service.IArticuloService;
 import com.spring.data.jpa.service.ICardService;
@@ -69,7 +70,7 @@ public class ProductController {
     	return categories;
     }
     @RequestMapping(value="/listarArticulos", method = RequestMethod.GET)
-    public List listarArticulos() {
+    public Iterable<vw_articulosBR_row> listarArticulos() {
     	
     	 String username;
     	 
@@ -83,7 +84,7 @@ public class ProductController {
          
          Usuario usuario = usuarioDao.findByCliente(username);
     	
-        List<String> articulos=articuloService.findByTodo();
+        Iterable<vw_articulosBR_row> articulos=articuloService.findAll();
     	
     	return articulos;
     }
