@@ -19,21 +19,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@Controller
+@RestController
 public class ProductController {
 
 
@@ -50,7 +46,7 @@ public class ProductController {
     @Autowired
     private ICartService cartService;
 
-    @ResponseBody
+
     @RequestMapping(value="/getNav", method = RequestMethod.GET)
     public List listarCategorias() {
     	
@@ -70,7 +66,7 @@ public class ProductController {
     	
     	return categories;
     }
-    @ResponseBody
+
     @RequestMapping(value="/listarArticulos", method = RequestMethod.GET)
     public List listarArticulos() {
     	
@@ -90,7 +86,90 @@ public class ProductController {
     	
     	return articulos;
     }
-    @ResponseBody
+
+//obtencion de articulos por Categoria
+    @RequestMapping(value="/findByCat/{cat}", method = RequestMethod.GET)
+    public    List<vw_articulosBR_row> getByCat(@PathVariable(value="cat") String categoria) {
+
+
+        String username;
+        System.out.println(categoria);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }
+        else {
+            username = "00000";
+        }
+        Usuario usuario = usuarioDao.findByCliente(username);
+        List<vw_articulosBR_row> artsByCat=articuloService.findAllByCategoria(categoria);
+        return artsByCat;
+    }
+
+    @RequestMapping(value="/findAllBy/{cat}/{sub}", method = RequestMethod.GET)
+    public    List<vw_articulosBR_row> findAllBy(@PathVariable(value="cat") String categoria,@PathVariable(value="sub") String sub) {
+
+
+        String username;
+        System.out.println(categoria);
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }
+        else {
+            username = "00000";
+        }
+        Usuario usuario = usuarioDao.findByCliente(username);
+        List<vw_articulosBR_row> artsByCat=new ArrayList<>();
+
+        if(sub!=null)
+        {
+            System.out.println("SubCat");
+           artsByCat=articuloService.findAllByCategoriaAndSub(categoria,sub);
+
+        }else
+        {
+
+            artsByCat  =articuloService.findAllByCategoria(categoria);
+
+
+        }
+
+        return artsByCat;
+    }
+
+    @RequestMapping(value="/findAllBy/{cat}/{sub}/{fam}", method = RequestMethod.GET)
+    public    List<vw_articulosBR_row> findAllByfam(@PathVariable(value="cat") String categoria,@PathVariable(value="sub") String sub,@PathVariable(value="fam") String fam) {
+
+
+        String username;
+        System.out.println(categoria);
+
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }
+        else {
+            username = "00000";
+        }
+        Usuario usuario = usuarioDao.findByCliente(username);
+
+
+
+            System.out.println("fam");
+        List<vw_articulosBR_row> artsByCat=articuloService.findAllByCategoriaAndSubAndFam(categoria,sub,fam);
+
+            return artsByCat;
+
+
+
+
+    }
+
     @RequestMapping(value="/listarCategorias", method = RequestMethod.GET)
     public List listarCategoriasBalam() {
     	
@@ -110,7 +189,7 @@ public class ProductController {
     	
     	return categorias;
     }
-    @ResponseBody
+
     @RequestMapping(value="/listarSubcategorias/{categoria}", method = RequestMethod.GET)
     public List listarSubCategoriasBalam(@PathVariable(value="categoria") String categoria) {
     	
@@ -130,7 +209,7 @@ public class ProductController {
     	
     	return subcategorias;
     }
-    @ResponseBody
+
     @RequestMapping(value="/listarFamilias/{categoria}/{subcategoria}", method = RequestMethod.GET)
     public List listarFamiliaBalam(@PathVariable(value="categoria") String categoria, @PathVariable(value="subcategoria") String subcategoria) {
     	
@@ -150,159 +229,8 @@ public class ProductController {
     	
     	return familias;
     }
-    @RequestMapping(value="/listar",method = RequestMethod.GET)
-    public String listar(@RequestParam Map<String,String> requestParams,Model model){
-
-    	String username;
-    	
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
-
-       String ID = cartService.findByRecentDate(usuario.getCliente());
-       if(ID!=null)
-       {
-           List<CardD>cardd=cardService.findAllByID(Integer.parseInt(ID));
-           if(cardd.size()>0)
-           {
-               model.addAttribute("carCount",cardd.size());
-           }
-       }
 
 
-        String category=requestParams.get("category");
-        String subcategory=requestParams.get("subcategory");
-        String fam=requestParams.get("fam");
-        String subfam=requestParams.get("subfam");
-        int filtro =1;
-
-        if(requestParams.get("filtro")==null)
-        {
-          filtro =0;
-        }
-
-
-        if(category==null && requestParams.get("filtro")!=null){
-
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,50);
-            String company=requestParams.get("company");
-            Page<vw_b2barticulos_row> products = productoService.findByFabricanteAndListaFiltro(company ,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> categories=productoService.findByCategoriaL(usuario.getListaPreciosEsp(),category);
-
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?company="+company, products);
-            model.addAttribute("categories",categories);
-            model.addAttribute("category",category);
-            model.addAttribute("Products", products);
-            model.addAttribute("page", pageRender);
-            model.addAttribute("company",company);
-            return "listar";
-        }
-
-        if(category==null){
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,6);
-            String company=requestParams.get("company");
-            Page<vw_b2barticulos_row> products = productoService.findByFabricanteAndLista(company ,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> categories=productoService.findByCategoriaL(usuario.getListaPreciosEsp(),category);
-
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?company="+company, products);
-            model.addAttribute("categories",categories);
-            model.addAttribute("category",category);
-            model.addAttribute("Products", products);
-            model.addAttribute("page", pageRender);
-            model.addAttribute("company",company);
-            return "listar";
-        }
-
-        if(category!=null && subcategory==null){
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,12);
-
-
-            Page<vw_b2barticulos_row> products=productoService.findByCategoriaAndLista(category,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> subCat=productoService.findByGrupo(category,usuario.getListaPreciosEsp());
-            System.out.println(subCat);
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?category="+category, products);
-            model.addAttribute("subcat",subCat);
-            model.addAttribute("Products", products);
-            model.addAttribute("category",category);
-            model.addAttribute("page", pageRender);
-            return "listar";
-        }
-
-
-        if(subcategory!=null && fam==null){
-
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,12);
-
-
-            Page<vw_b2barticulos_row> products=productoService.findByCategoriaAndGrupoAndLista(category,subcategory,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> familia1 =productoService.findByCategoriaAndGrupo(category,subcategory,usuario.getListaPreciosEsp());
-
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?category="+category+"&subcategory="+subcategory, products);
-            model.addAttribute("familiaList",familia1);
-            model.addAttribute("subcat",subcategory);
-            model.addAttribute("Products", products);
-            model.addAttribute("category",category);
-            model.addAttribute("page", pageRender);
-            return "listar";
-        }
-        if(fam!=null && subfam==null){
-
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,12);
-
-
-            Page<vw_b2barticulos_row> products = productoService.findByCategoriaAndGrupoAndFamiliaAndLista(category,subcategory,fam,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> familia = productoService.findByCategoriaAndGrupoAndFamilia(category,subcategory,fam,usuario.getListaPreciosEsp());
-
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?category="+category+"&subcategory="+subcategory+"&fam="+fam, products);
-            model.addAttribute("familiaList",familia);
-            model.addAttribute("subcat",subcategory);
-            model.addAttribute("famParam",fam);
-            model.addAttribute("Products", products);
-            model.addAttribute("category",category);
-            model.addAttribute("page", pageRender);
-
-            return "listar";
-        }
-        if(subfam!=null){
-
-            int page=Integer.parseInt(requestParams.get("page"));
-
-            Pageable pageRequest= PageRequest.of(page,6);
-
-
-            Page<vw_b2barticulos_row> products=productoService.findByCategoriaAndGrupoAndFamiliaAndCanalAndLista(category,subcategory,fam,subfam,usuario.getListaPreciosEsp(),pageRequest);
-            List<String> subfamilia =productoService.findByCategoriaAndGrupoAndFamilia(category,subcategory,fam,usuario.getListaPreciosEsp());
-
-            PageRender<vw_b2barticulos_row> pageRender = new PageRender<>("/listar?category="+category, products);
-            model.addAttribute("subfamilia",subfamilia);
-            model.addAttribute("subcat",subcategory);
-            model.addAttribute("fam",fam);
-            model.addAttribute("Products", products);
-            model.addAttribute("category",category);
-            model.addAttribute("page", pageRender);
-            return "listar";
-        }
-
-
-        return "listar";
-
-    }
 
 
     @RequestMapping(value="/articulo",method = RequestMethod.GET)

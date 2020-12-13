@@ -66,8 +66,8 @@ public class ArticuloServiceImpl implements IArticuloService{
 
     @Override
     @Transactional(readOnly = true)
-    public Page<vw_articulosBR_row> findByCategoriaAndLista(String categoria,String lista, Pageable pageable) {
-        return articuloDao.findByCategoriaAndLista(categoria,lista,pageable);
+    public List<vw_articulosBR_row> findAllByCategoria(String categoria) {
+        return articuloDao.findAllByCategoria(categoria);
     }
 
     @Override
@@ -133,4 +133,14 @@ public class ArticuloServiceImpl implements IArticuloService{
 	public List<String> findByFamilia(String categoria, String subcategoria) {
 		return articuloDao.findByFamilia(categoria, subcategoria);
 	}
+
+    @Override
+    public List<vw_articulosBR_row> findAllByCategoriaAndSub(String cat, String sub) {
+        return articuloDao.findAllByCategoriaAndSub(cat,sub);
+    }
+
+    @Override
+    public List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat, String sub, String fam) {
+        return articuloDao.findAllByCategoriaAndSubAndFam(cat,sub,fam);
+    }
 }

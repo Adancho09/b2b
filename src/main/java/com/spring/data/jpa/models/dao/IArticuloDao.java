@@ -27,7 +27,7 @@ public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> 
 	    Page<vw_articulosBR_row> findByFabricanteAndListaFiltro(String fabricante , String lista, Pageable pegeable);
 
 	    Page<vw_articulosBR_row> findByFabricanteAndLista(String fabricante,String lista,Pageable pageable);
-	    Page<vw_articulosBR_row> findByCategoriaAndLista(String categoria,String lista, Pageable pageable);
+	   // Page<vw_articulosBR_row> findByCategoriaAndLista(String categoria,String lista, Pageable pageable);
 	    vw_articulosBR_row findByArticuloAndLista(String articulo,String lista);
 	    Page<vw_articulosBR_row> findByCategoriaAndGrupoAndLista(String categoria,String grupo,String lista,Pageable pageable);
 	    Page<vw_articulosBR_row> findByCategoriaAndGrupoAndFamiliaAndLista(String categoria,String grupo,String familia,String lista,Pageable pageable);
@@ -50,7 +50,12 @@ public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> 
 	    List<String> findBySubcategoria(String categoria);
 	    @Query(value = "select familia from vw_articulosbr WHERE categoria =?1 AND grupo =?2 GROUP BY familia",nativeQuery = true)
 	    List<String> findByFamilia(String categoria, String subcategoria);
-
+	    @Query(value = "select * from vw_articulosbr where categoria =?1",nativeQuery = true)
+	    List<vw_articulosBR_row> findAllByCategoria(String categoria);
+	@Query(value = "select * from vw_articulosbr where categoria =?1 and  grupo =?2",nativeQuery = true)
+	List<vw_articulosBR_row> findAllByCategoriaAndSub(String cat,String sub);
+	@Query(value = "select * from vw_articulosbr where categoria =?1 and  grupo =?2 and familia=?3",nativeQuery = true)
+	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
 
 
 }
