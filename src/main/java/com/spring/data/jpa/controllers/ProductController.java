@@ -127,7 +127,7 @@ public class ProductController {
 
         if(sub!=null)
         {
-            System.out.println("SubCat");
+            //System.out.println("SubCat");
            artsByCat=articuloService.findAllByCategoriaAndSub(categoria,sub);
 
         }else
@@ -146,7 +146,7 @@ public class ProductController {
 
 
         String username;
-        System.out.println(categoria);
+        //System.out.println(categoria);
 
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -228,6 +228,25 @@ public class ProductController {
         List<String> familias=articuloService.findByFamilia(categoria,subcategoria);
     	
     	return familias;
+    }
+    @RequestMapping(value="/articulo/{codigo}", method = RequestMethod.GET)
+    public vw_articulosBR_row DetalleArticulo(@PathVariable(value="codigo") String codigo) {
+    	
+    	 String username;
+    	 
+    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	 if(principal instanceof UserDetails) {
+    		username = ((UserDetails) principal).getUsername();
+    	 }
+    	 else {
+    		username = "00000";
+    	 }
+         
+         Usuario usuario = usuarioDao.findByCliente(username);
+    	
+        vw_articulosBR_row detalleArticulo=articuloService.findByCodigo(codigo);
+    	
+    	return detalleArticulo;
     }
 
 
