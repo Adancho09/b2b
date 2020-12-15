@@ -53,7 +53,6 @@ public interface IArticuloService {
 	List<vw_articulosBR_row> findAllByCategoriaAndSub(String cat,String sub);
 	@Query(value = "select * from vw_articulosbr where categoria =?1 and  grupo =?2 and familia=?3",nativeQuery = true)
 	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
-	@Query(value = "select * from vw_articulosbr where articulo =?1",nativeQuery = true)
-	vw_articulosBR_row findByCodigo(String codigo);
+	vw_articulosBR_row findByArticulo(String codigo);
 
 }

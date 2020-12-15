@@ -241,11 +241,11 @@ public class ProductController {
     	 else {
     		username = "00000";
     	 }
-         
+         System.out.println(codigo);
          Usuario usuario = usuarioDao.findByCliente(username);
     	
-        vw_articulosBR_row detalleArticulo=articuloService.findByCodigo(codigo);
-    	
+        vw_articulosBR_row detalleArticulo=articuloService.findByArticulo(codigo);
+    	System.out.println(detalleArticulo.getArticulo());
     	return detalleArticulo;
     }
 

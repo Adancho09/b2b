@@ -144,7 +144,7 @@ public class ArticuloServiceImpl implements IArticuloService{
         return articuloDao.findAllByCategoriaAndSubAndFam(cat,sub,fam);
     }
     @Override
-    public vw_articulosBR_row findByCodigo(String codigo) {
-        return articuloDao.findByCodigo(codigo);
+    public vw_articulosBR_row findByArticulo(String codigo) {
+        return articuloDao.findByArticulo(codigo);
     }
 }
