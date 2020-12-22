@@ -1,4 +1,4 @@
-package com.spring.data.jpa.service;
+/*package com.spring.data.jpa.service;
 
 import com.spring.data.jpa.models.dao.IUsuarioDao;
 import com.spring.data.jpa.models.entity.Usuario;
@@ -40,3 +40,4 @@ public class JpaUserDetailService implements UserDetailsService {
 
 
 }
+*/
