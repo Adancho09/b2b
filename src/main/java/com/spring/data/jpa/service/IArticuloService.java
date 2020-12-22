@@ -1,4 +1,5 @@
 package com.spring.data.jpa.service;
+import com.spring.data.jpa.models.entity.artCaracteristicas;
 import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,8 @@ public interface IArticuloService {
 	@Query(value = "select * from vw_articulosbr where categoria =?1 and  grupo =?2 and familia=?3",nativeQuery = true)
 	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
 	vw_articulosBR_row findByArticulo(String codigo);
+
+	@Query(value = "select * from ArtCaracteristicas where articulo =?1 AND renglon=2",nativeQuery = true)
+	List<artCaracteristicas> getDetallesArticulo(String sku);
 
 }
