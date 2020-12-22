@@ -1,10 +1,10 @@
 package com.spring.data.jpa.controllers;
 
-
 import com.spring.data.jpa.Paginator.PageRender;
 import com.spring.data.jpa.models.dao.IUsuarioDao;
 import com.spring.data.jpa.models.entity.CardD;
 import com.spring.data.jpa.models.entity.Usuario;
+import com.spring.data.jpa.models.entity.artCaracteristicas;
 import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 import com.spring.data.jpa.models.entity.vw_b2barticulos_row;
 import com.spring.data.jpa.service.IArticuloService;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ProductController {
 
@@ -50,41 +50,23 @@ public class ProductController {
     @RequestMapping(value="/getNav", method = RequestMethod.GET)
     public List listarCategorias() {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
     	
-        List<String> categories=productoService.findByCategoriaL(usuario.getListaPreciosEsp(),"");
-    	
+        List<String> categories=productoService.findByCategoriaL("1","");
     	return categories;
     }
 
     @RequestMapping(value="/listarArticulos", method = RequestMethod.GET)
     public List listarArticulos() {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
-    	
         List<vw_articulosBR_row> articulos=articuloService.findByTodo();
-    	
     	return articulos;
+    }
+    @RequestMapping(value="/detalleArticulo/{sku}", method = RequestMethod.GET)
+    public    List getDetallesArticulo(@PathVariable(value="sku") String sku) {
+
+
+        List<artCaracteristicas> articuloDetalle = articuloService.getDetallesArticulo(sku);
+        return articuloDetalle;
     }
 
 //obtencion de articulos por Categoria
@@ -92,17 +74,6 @@ public class ProductController {
     public    List<vw_articulosBR_row> getByCat(@PathVariable(value="cat") String categoria) {
 
 
-        String username;
-        System.out.println(categoria);
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        }
-        else {
-            username = "00000";
-        }
-        Usuario usuario = usuarioDao.findByCliente(username);
         List<vw_articulosBR_row> artsByCat=articuloService.findAllByCategoria(categoria);
         return artsByCat;
     }
@@ -111,146 +82,51 @@ public class ProductController {
     public    List<vw_articulosBR_row> findAllBy(@PathVariable(value="cat") String categoria,@PathVariable(value="sub") String sub) {
 
 
-        String username;
-        System.out.println(categoria);
-
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        }
-        else {
-            username = "00000";
-        }
-        Usuario usuario = usuarioDao.findByCliente(username);
         List<vw_articulosBR_row> artsByCat=new ArrayList<>();
-
         if(sub!=null)
         {
-            //System.out.println("SubCat");
            artsByCat=articuloService.findAllByCategoriaAndSub(categoria,sub);
 
         }else
         {
-
             artsByCat  =articuloService.findAllByCategoria(categoria);
-
-
         }
-
         return artsByCat;
     }
 
     @RequestMapping(value="/findAllBy/{cat}/{sub}/{fam}", method = RequestMethod.GET)
     public    List<vw_articulosBR_row> findAllByfam(@PathVariable(value="cat") String categoria,@PathVariable(value="sub") String sub,@PathVariable(value="fam") String fam) {
 
-
-        String username;
-        //System.out.println(categoria);
-
-
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal instanceof UserDetails) {
-            username = ((UserDetails) principal).getUsername();
-        }
-        else {
-            username = "00000";
-        }
-        Usuario usuario = usuarioDao.findByCliente(username);
-
-
-
-            System.out.println("fam");
         List<vw_articulosBR_row> artsByCat=articuloService.findAllByCategoriaAndSubAndFam(categoria,sub,fam);
-
-            return artsByCat;
-
-
-
-
+        return artsByCat;
     }
 
     @RequestMapping(value="/listarCategorias", method = RequestMethod.GET)
     public List listarCategoriasBalam() {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
-    	
         List<String> categorias=articuloService.findByCategoria();
-    	
     	return categorias;
     }
 
     @RequestMapping(value="/listarSubcategorias/{categoria}", method = RequestMethod.GET)
     public List listarSubCategoriasBalam(@PathVariable(value="categoria") String categoria) {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
-    	
         List<String> subcategorias=articuloService.findBySubcategoria(categoria);
-    	
     	return subcategorias;
     }
 
     @RequestMapping(value="/listarFamilias/{categoria}/{subcategoria}", method = RequestMethod.GET)
     public List listarFamiliaBalam(@PathVariable(value="categoria") String categoria, @PathVariable(value="subcategoria") String subcategoria) {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         
-         Usuario usuario = usuarioDao.findByCliente(username);
-    	
         List<String> familias=articuloService.findByFamilia(categoria,subcategoria);
-    	
     	return familias;
     }
     @RequestMapping(value="/articulo/{codigo}", method = RequestMethod.GET)
     public vw_articulosBR_row DetalleArticulo(@PathVariable(value="codigo") String codigo) {
     	
-    	 String username;
-    	 
-    	 Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	 if(principal instanceof UserDetails) {
-    		username = ((UserDetails) principal).getUsername();
-    	 }
-    	 else {
-    		username = "00000";
-    	 }
-         System.out.println(codigo);
-         Usuario usuario = usuarioDao.findByCliente(username);
-    	
         vw_articulosBR_row detalleArticulo=articuloService.findByArticulo(codigo);
-    	System.out.println(detalleArticulo.getArticulo());
     	return detalleArticulo;
     }
-
-
-
 
     @RequestMapping(value="/articulo",method = RequestMethod.GET)
     public String articulo(@RequestParam Map<String,String> requestParams,Model model) {
@@ -303,10 +179,6 @@ public class ProductController {
 
         return "errorArt";
     }
-
-
-
-
 
     @RequestMapping(value="/filterArt",method = RequestMethod.POST)
     public String filterArt(@RequestParam Map<String,String> requestParams,Model model){
@@ -365,11 +237,6 @@ public class ProductController {
 
 
         }
-
-
-
-
-
         return "redirect:/cart";
 
     }

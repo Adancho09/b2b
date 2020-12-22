@@ -29,7 +29,7 @@ private BCryptPasswordEncoder passwordEncoder;
 @Override
 protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/getNav","/css/**","/vendor/**","/img/**").permitAll()
+        http.authorizeRequests().antMatchers("/css/**","/vendor/**","/img/**").permitAll()
         .antMatchers("/*").permitAll()
         .and()
         .formLogin().loginPage("/login")

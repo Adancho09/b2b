@@ -8,19 +8,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ArtCaracteriticas")
+@Table(name = "ArtCaracteristicas")
 public class artCaracteristicas implements Serializable {
 	
-	private Double renglon;
+	@Id
+	private String articulo;
+	private BigDecimal renglon;
 	private String orden;
-	private String caracteriticas;
+	private String caracteristicas;
 	private String descripcion;
 	private String tipo;
 	private String filtro;
 	private String estatus;
 
-	@Id
-	private String articulo;
+	public String getCaracteristicas() {
+		return caracteristicas;
+	}
+
+	public void setCaracteristicas(String caracteristicas) {
+		this.caracteristicas = caracteristicas;
+	}
 
 	public String getArticulo() {
 		return articulo;
@@ -30,11 +37,11 @@ public class artCaracteristicas implements Serializable {
 		this.articulo = articulo;
 	}
 
-	public Double getRenglon() {
+	public BigDecimal getRenglon() {
 		return renglon;
 	}
 
-	public void setRenglon(Double renglon) {
+	public void setRenglon(BigDecimal renglon) {
 		this.renglon = renglon;
 	}
 
@@ -47,11 +54,11 @@ public class artCaracteristicas implements Serializable {
 	}
 
 	public String getCaracteriticas() {
-		return caracteriticas;
+		return caracteristicas;
 	}
 
-	public void setCaracteriticas(String caracteriticas) {
-		this.caracteriticas = caracteriticas;
+	public void setCaracteriticas(String caracteristicas) {
+		this.caracteristicas = caracteristicas;
 	}
 
 	public String getDescripcion() {
