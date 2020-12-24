@@ -1,19 +1,21 @@
 package com.spring.data.jpa.models.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ArtCaracteristicas")
+@IdClass(DetalleArticuloId.class)
 public class artCaracteristicas implements Serializable {
 	
 	@Id
 	private String articulo;
-	private BigDecimal renglon;
+	@Id
+	private double renglon;
+	
 	private String orden;
 	private String caracteristicas;
 	private String descripcion;
@@ -37,11 +39,11 @@ public class artCaracteristicas implements Serializable {
 		this.articulo = articulo;
 	}
 
-	public BigDecimal getRenglon() {
+	public double getRenglon() {
 		return renglon;
 	}
 
-	public void setRenglon(BigDecimal renglon) {
+	public void setRenglon(double renglon) {
 		this.renglon = renglon;
 	}
 
@@ -51,14 +53,6 @@ public class artCaracteristicas implements Serializable {
 
 	public void setOrden(String orden) {
 		this.orden = orden;
-	}
-
-	public String getCaracteriticas() {
-		return caracteristicas;
-	}
-
-	public void setCaracteriticas(String caracteristicas) {
-		this.caracteristicas = caracteristicas;
 	}
 
 	public String getDescripcion() {

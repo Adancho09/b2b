@@ -62,8 +62,7 @@ public class ProductController {
     	return articulos;
     }
     @RequestMapping(value="/detalleArticulo/{sku}", method = RequestMethod.GET)
-    public    List getDetallesArticulo(@PathVariable(value="sku") String sku) {
-
+    public List getDetallesArticulo(@PathVariable(value="sku") String sku) {
 
         List<artCaracteristicas> articuloDetalle = articuloService.getDetallesArticulo(sku);
         return articuloDetalle;

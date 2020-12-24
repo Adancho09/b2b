@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.data.jpa.models.dao.IArticuloDao;
+import com.spring.data.jpa.models.dao.IDetalleArticuloDao;
 import com.spring.data.jpa.models.entity.artCaracteristicas;
 import com.spring.data.jpa.models.entity.vw_articulosBR_row;
 
@@ -18,6 +19,9 @@ public class ArticuloServiceImpl implements IArticuloService{
 
 	@Autowired
     private IArticuloDao articuloDao;
+	
+	@Autowired
+    private IDetalleArticuloDao articuloDetalleDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -149,7 +153,8 @@ public class ArticuloServiceImpl implements IArticuloService{
         return articuloDao.findByArticulo(codigo);
     }
 	@Override
+	@Transactional(readOnly = true)
     public List<artCaracteristicas> getDetallesArticulo(String sku) {
-        return articuloDao.getDetallesArticulo(sku);
+        return articuloDetalleDao.getDetallesArticulo(sku);
     }
 }
