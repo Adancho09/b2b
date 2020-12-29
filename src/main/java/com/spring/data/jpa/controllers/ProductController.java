@@ -126,6 +126,12 @@ public class ProductController {
         vw_articulosBR_row detalleArticulo=articuloService.findByArticulo(codigo);
     	return detalleArticulo;
     }
+    @RequestMapping(value="/BuscarArticulo/{codigo}", method = RequestMethod.GET)
+    public List BusquedaArticulo(@PathVariable(value="codigo") String codigo) {
+    	
+        List<vw_articulosBR_row> busquedaArticulo=articuloService.findByCriterio(codigo);
+    	return busquedaArticulo;
+    }
 
     @RequestMapping(value="/articulo",method = RequestMethod.GET)
     public String articulo(@RequestParam Map<String,String> requestParams,Model model) {

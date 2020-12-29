@@ -152,6 +152,10 @@ public class ArticuloServiceImpl implements IArticuloService{
     public vw_articulosBR_row findByArticulo(String codigo) {
         return articuloDao.findByArticulo(codigo);
     }
+    @Override
+    public List<vw_articulosBR_row> findByCriterio(String busqueda) {
+        return articuloDao.findByCriterio(busqueda);
+    }
 	@Override
 	@Transactional(readOnly = true)
     public List<artCaracteristicas> getDetallesArticulo(String sku) {

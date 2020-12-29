@@ -59,4 +59,7 @@ public interface IArticuloService {
 	@Query(value = "SELECT * FROM artCaracteristicas WHERE articulo =?1",nativeQuery = true)
 	List<artCaracteristicas> getDetallesArticulo(String sku);
 
+	@Query(value = "select * from vw_articulosbr where descripcion like %?%",nativeQuery = true)
+	public List<vw_articulosBR_row> findByCriterio(String codigo);
+
 }

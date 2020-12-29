@@ -58,5 +58,8 @@ public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> 
 	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
 	vw_articulosBR_row findByArticulo(String codigo);
 
+	@Query(value = "select * from vw_articulosbr where descripcion like %?%",nativeQuery = true)
+	List<vw_articulosBR_row> findByCriterio(String busqueda);
+
 
 }
