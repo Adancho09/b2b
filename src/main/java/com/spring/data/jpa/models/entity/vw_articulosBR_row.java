@@ -23,16 +23,21 @@ public class vw_articulosBR_row implements Serializable {
 
     private String canal;
     private String lista;
-    private BigDecimal Precio;
-
-
+    
     private String descripcion;
+
+    
     private int real_qty;
     private int real_qty3;
 
     private int  cantidad;
 
     private double  importe;
+    
+    private BigDecimal Precio;
+   
+    @Column(name = "nombrecorto")
+    private String nombrecorto;
 
     public String getLista() {
         return lista;
@@ -42,7 +47,15 @@ public class vw_articulosBR_row implements Serializable {
         this.lista = lista;
     }
 
-    public String getCanal() {
+    public String getNombrecorto() {
+		return nombrecorto;
+	}
+
+	public void setNombrecorto(String nombrecorto) {
+		this.nombrecorto = nombrecorto;
+	}
+
+	public String getCanal() {
         return canal;
     }
 
