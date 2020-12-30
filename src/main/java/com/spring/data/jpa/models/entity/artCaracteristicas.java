@@ -5,15 +5,18 @@ import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ArtCaracteristicas")
+@Table(name = "artcaracteristicas")
+@IdClass(ArtCarApk.class)
 public class artCaracteristicas implements Serializable {
 	
 	@Id
 	private String articulo;
-	private BigDecimal renglon;
+	@Id
+	private int renglon;
 	private String orden;
 	private String caracteristicas;
 	private String descripcion;
@@ -37,11 +40,11 @@ public class artCaracteristicas implements Serializable {
 		this.articulo = articulo;
 	}
 
-	public BigDecimal getRenglon() {
+	public int getRenglon() {
 		return renglon;
 	}
 
-	public void setRenglon(BigDecimal renglon) {
+	public void setRenglon(int renglon) {
 		this.renglon = renglon;
 	}
 

@@ -56,7 +56,4 @@ public interface IArticuloService {
 	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
 	vw_articulosBR_row findByArticulo(String codigo);
 
-	@Query(value = "select * from ArtCaracteristicas where articulo =?1 AND renglon=2",nativeQuery = true)
-	List<artCaracteristicas> getDetallesArticulo(String sku);
-
 }

@@ -58,8 +58,7 @@ public interface IArticuloDao extends CrudRepository<vw_articulosBR_row,String> 
 	@Query(value = "select * from vw_articulosbr where categoria =?1 and  grupo =?2 and familia=?3",nativeQuery = true)
 	List<vw_articulosBR_row> findAllByCategoriaAndSubAndFam(String cat,String sub,String fam);
 	vw_articulosBR_row findByArticulo(String codigo);
-	@Query(value = "select * from artCaracteristicas where Articulo =?1 AND renglon=2",nativeQuery = true)
-	List<artCaracteristicas> getDetallesArticulo(String sku);
+
 
 
 }
